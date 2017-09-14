@@ -66,7 +66,7 @@ public final class CertificateHelper {
         Security.addProvider(new BouncyCastleProvider());
     }
 
-    private static final String KEYGEN_ALGORITHM = "RSA";
+    private static final String KEYGEN_ALGORITHM = "EC";
 
     private static final String SECURE_RANDOM_ALGORITHM = "SHA1PRNG";
 
@@ -77,11 +77,11 @@ public final class CertificateHelper {
      * performs better than SHA256; see this question for details:
      * http://crypto.stackexchange.com/questions/26336/sha512-faster-than-sha256
      */
-    private static final String SIGNATURE_ALGORITHM = (is32BitJvm() ? "SHA256" : "SHA512") + "WithRSAEncryption";
+    private static final String SIGNATURE_ALGORITHM = (is32BitJvm() ? "SHA256" : "SHA512") + "With" + ("EC".equals(KEYGEN_ALGORITHM)?"ECDSA":"RSAEncryption");
 
-    private static final int ROOT_KEYSIZE = 2048;
+    private static final int ROOT_KEYSIZE = 256;
 
-    private static final int FAKE_KEYSIZE = 1024;
+    private static final int FAKE_KEYSIZE = 256;
 
     /** The milliseconds of a day */
     private static final long ONE_DAY = 86400000L;
